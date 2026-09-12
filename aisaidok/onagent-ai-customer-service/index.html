@@ -6,17 +6,17 @@
 
   <!-- ===== 基本 SEO ===== -->
   <!-- 標題控制在 60 字元內，關鍵字（onagent、AI 客服）放在前段，避免在 SERP 被截斷 -->
-  <title>如何用 onagent 製作 AI 客服：從工具定義到提示詞實戰 | AI 說這樣可以</title>
+  <title>如何用 onagent 製作 AI 客服：從工具定義到提示詞實戰 | Ripple</title>
   <meta name="description" content="用 onagent 與 Claude Code 打造美髮沙龍 AI 預約客服的完整實作：工具定義、kind 參數、Agent Bridge SDK 串接，以及提示詞調校踩過的四個坑。" />
   <meta name="author" content="AI 說這樣可以" />
   <link rel="canonical" href="https://ripple.shuttle.tools/aisaidok/onagent-ai-customer-service/" />
 
   <!-- ===== Open Graph（Facebook、LinkedIn、Threads 等社群分享） ===== -->
   <meta property="og:type" content="article" />
-  <meta property="og:site_name" content="AI 說這樣可以" />
+  <meta property="og:site_name" content="Ripple" />
   <meta property="og:locale" content="zh_TW" />
   <meta property="og:title" content="我用 onagent 做了一個 AI 客服，然後發現難的根本不是 AI" />
-  <meta property="og:description" content="一個美髮沙龍的預約助理，從零到能真的幫客人訂位、查詢、取消。工具寫完只花了一個下午，提示詞卻改了三天。" />
+  <meta property="og:description" content="一個美髮沙龍的預約助理，從零到能真的幫客人訂位、查詢、取消。工具寫完只花了十分鐘，提示詞卻改了三小時。" />
   <meta property="og:url" content="https://ripple.shuttle.tools/aisaidok/onagent-ai-customer-service/" />
   <meta property="og:image" content="https://ripple.shuttle.tools/og/onagent-ai-customer-service.png" />
   <meta property="og:image:width" content="1200" />
@@ -33,7 +33,7 @@
   <!-- ===== Twitter / X 卡片 ===== -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="我用 onagent 做了一個 AI 客服，然後發現難的根本不是 AI" />
-  <meta name="twitter:description" content="工具寫完只花了一個下午，提示詞卻改了三天——這篇是那三天的筆記。" />
+  <meta name="twitter:description" content="工具寫完只花了十分鐘，提示詞卻改了三小時——這篇是那三小時的筆記。" />
   <meta name="twitter:image" content="https://ripple.shuttle.tools/og/onagent-ai-customer-service.png" />
   <meta name="twitter:image:alt" content="onagent AI 客服對話畫面：助理列出設計師的可預約時段" />
 
@@ -56,7 +56,7 @@
     },
     "publisher": {
       "@type": "Organization",
-      "name": "AI 說這樣可以",
+      "name": "Ripple",
       "logo": {
         "@type": "ImageObject",
         "url": "https://ripple.shuttle.tools/logo.png"
@@ -126,19 +126,15 @@
   <header class="topbar">
     <div class="topbar-inner">
       <a class="brand" href="/" aria-label="Ripple 首頁">
-        <svg class="brand-mark" viewBox="0 0 24 24" width="26" height="26" fill="none" aria-hidden="true">
-          <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.7" />
-          <path d="M6.5 12a5.5 5.5 0 0 1 5.5-5.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" opacity="0.75" />
-          <path d="M17.5 12a5.5 5.5 0 0 1-5.5 5.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" opacity="0.75" />
-          <path d="M3 12A9 9 0 0 1 12 3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" opacity="0.4" />
-          <path d="M21 12a9 9 0 0 1-9 9" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" opacity="0.4" />
+        <svg class="brand-mark" viewBox="0 0 24 24" width="24" height="24" fill="none" aria-hidden="true">
+          <circle cx="12" cy="12" r="2" fill="currentColor" />
+          <circle cx="12" cy="12" r="6.5" stroke="currentColor" stroke-width="1.6" opacity="0.55" />
+          <circle cx="12" cy="12" r="10.5" stroke="currentColor" stroke-width="1.6" opacity="0.25" />
         </svg>
         <span class="brand-name">Ripple</span>
       </a>
       <nav class="topbar-nav">
-        <a href="/">文章列表</a>
-        <a href="/aisaidok/">關於</a>
-        <a class="topbar-cta" href="#">訂閱</a>
+        <a href="/aisaidok/">AI 說這樣可以</a>
       </nav>
     </div>
   </header>
@@ -166,7 +162,7 @@
         <h1 class="post-title" itemprop="headline">我用 onagent 做了一個 AI 客服，然後發現難的根本不是 AI</h1>
         <p class="post-subtitle">
           一個美髮沙龍的預約助理，從零到能真的幫客人訂位、查詢、取消。
-          工具寫完只花了一個下午，提示詞卻改了三天——這篇是那三天的筆記。
+          工具寫完只花了十分鐘，提示詞卻改了三小時——這篇是那三小時的筆記。
         </p>
 
         <!-- 作者資訊列 -->
@@ -175,7 +171,6 @@
           <div class="meta-text">
             <div class="meta-line-1">
               <a class="author-name" href="/aisaidok/" itemprop="author" itemscope itemtype="https://schema.org/Person"><span itemprop="name">AI 說這樣可以</span></a>
-              <button type="button" class="follow-btn">追蹤</button>
             </div>
             <div class="meta-line-2">
               <span>8 分鐘閱讀</span>
@@ -241,7 +236,7 @@
           四件事，聽起來一個下午就能做完。
         </p>
 
-        <p>結果工具真的一個下午就寫完了。然後我花了三天在改提示詞。</p>
+        <p>結果工具十分鐘就推上去了。然後我花了三小時在改提示詞。</p>
 
         <h2>onagent 在做的事</h2>
 
@@ -284,19 +279,18 @@ npx claude-skill-onagent --user   # 或裝到 ~/.claude/skills/</code></pre>
 
         <blockquote>
           幫我在 onagent 建一個 support-app，這是美髮沙龍的預約助理。
-          需要四個工具：查空位、訂位、查自己的預約、取消。查空位要能用日期跟設計師篩選。
+          需要這些工具：查空位、訂位（含取消）、查自己的預約。查空位要能用日期跟設計師篩選。
         </blockquote>
 
         <p>
           然後它就把整套流程跑完了：登入（<code>onagent login --web</code> 會自動開瀏覽器）、
-          建 app、產生四份 tool YAML、一個一個推上去。
+          建 app、產生 tool YAML、一個一個推上去。
         </p>
 
         <pre><code>onagent app create support-app
 onagent tool create support-app check_availability.yaml
 onagent tool create support-app book_appointment.yaml
-onagent tool create support-app get_my_appointments.yaml
-onagent tool create support-app get_today_date.yaml</code></pre>
+onagent tool create support-app get_my_appointments.yaml</code></pre>
 
         <p>
           <strong>為什麼推薦這樣做</strong>：不是因為省打字，而是因為 tool 的
@@ -328,7 +322,7 @@ onagent tool create support-app get_today_date.yaml</code></pre>
         </p>
 
         <p>
-          這四個工具裡有三個是 <code>query</code>。連「訂位」都是——因為 LLM 需要知道
+          這三個工具全都是 <code>query</code>。連「訂位」都是——因為 LLM 需要知道
           訂成功了沒，才能跟客人說「好了」還是「抱歉剛被搶走了」。
         </p>
 
@@ -366,7 +360,7 @@ const bridge = new AgentBridge({
       (raw) => validateArgs(raw),      // 驗證參數
       (args) => findOpenSlots(args),   // 實際查詢
     ),
-    // ... 其他三個工具
+    // ... 其他工具
   ],
 })</code></pre>
 
@@ -380,7 +374,7 @@ const bridge = new AgentBridge({
 
         <hr />
 
-        <h2>然後就是三天的提示詞地獄</h2>
+        <h2>然後就是三小時的提示詞地獄</h2>
 
         <p>
           功能都通了，我很開心地開始測試，然後遇到一連串完全不在預期內的問題。
@@ -398,7 +392,8 @@ const bridge = new AgentBridge({
         </p>
 
         <p>
-          解法是加一個專門的工具 <code>get_today_date</code>，然後在提示詞裡明確要求：
+          解法是補上第四個工具 <code>get_today_date</code>——原本的需求裡根本沒想到要有它——
+          然後在提示詞裡明確要求：
         </p>
 
         <pre><code>If the visitor uses a relative date phrase (e.g. "today,"
@@ -497,7 +492,7 @@ anyway.</code></pre>
         <h2>回頭看，提示詞其實是在寫規格書</h2>
 
         <p>
-          三天之後我的提示詞從五行變成七十行。回頭讀那七十行，我發現它們根本不是「提示詞」，
+          三小時之後我的提示詞從五行變成七十行。回頭讀那七十行，我發現它們根本不是「提示詞」，
           而是一份<strong>寫給非人類同事看的工作規範</strong>：
         </p>
 
@@ -544,19 +539,19 @@ anyway.</code></pre>
         <h2>所以值得嗎？</h2>
 
         <p>
-          值得。三天聽起來很多，但這三天解決的是「這個客服到底該怎麼工作」，
+          值得。三小時聽起來不多，但這三小時解決的是「這個客服到底該怎麼工作」，
           而這件事不管你用什麼技術做都躲不掉。
         </p>
 
         <p>
           <a href="https://onagent.shuttle.tools/" target="_blank" rel="noopener">onagent</a>
           幫我省掉的是另外那一大塊——連線管理、對話狀態、工具呼叫的往返、重連、配額。
-          那些如果自己刻，三天大概只夠把 WebSocket 的重連寫對。
+          那些如果自己刻，三小時大概只夠把 WebSocket 的重連寫對。
           Claude Code 又再省掉建 app、產 YAML、推工具那些瑣事。
         </p>
 
         <p>
-          有趣的是，這兩層自動化都不能幫我做<strong>那三天的事</strong>。
+          有趣的是，這兩層自動化都不能幫我做<strong>那三小時的事</strong>。
           它們能幫我把想法變成程式碼，但沒辦法幫我決定「查不到空位」跟「被訂走了」是不是同一件事——
           那要有人真的去想沙龍是怎麼運作的。
         </p>
@@ -594,7 +589,6 @@ anyway.</code></pre>
           寫程式、踩坑、然後把坑寫下來。專門記錄那些「照著文件做卻不會動」的瞬間，
           以及 AI 很有自信地給我錯答案的每一天。
         </p>
-        <button type="button" class="follow-btn follow-btn-lg">追蹤</button>
       </div>
     </section>
 
@@ -613,12 +607,7 @@ anyway.</code></pre>
   <!-- ===== 頁尾 ===== -->
   <footer class="site-footer">
     <div class="site-footer-inner">
-      <a href="/">© 2026 AI 說這樣可以</a>
-      <nav class="site-footer-nav">
-        <a href="/">文章列表</a>
-        <a href="/aisaidok/">關於</a>
-        <a href="/sitemap.xml">Sitemap</a>
-      </nav>
+      <a href="/">© 2026 Ripple</a>
     </div>
   </footer>
 
