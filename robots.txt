@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# 搜尋結果頁、標籤分頁這類會產生大量近似內容的路徑，
+# 通常不希望被索引（目前尚未實作，先預留規則）
+Disallow: /search
+Disallow: /*?q=
+
+Sitemap: https://ripple.shuttle.tools/sitemap.xml

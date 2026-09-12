@@ -1,0 +1,632 @@
+/* ==========================================================================
+   AI 說這樣可以 — Medium 風格部落格樣式
+   ========================================================================== */
+
+:root {
+  --text: #242424;
+  --text-secondary: #6b6b6b;
+  --text-tertiary: #8b8b8b;
+  --bg: #ffffff;
+  --border: #e6e6e6;
+  --border-strong: #d4d4d4;
+  --accent: #1a8917;          /* Medium 的招牌綠 */
+  --accent-hover: #156f12;
+  --code-bg: #f2f2f2;
+  --placeholder-bg: #f7f7f7;
+
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang TC",
+               "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+  --font-serif: "Georgia", "Songti TC", "Noto Serif TC", serif;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+
+  /* 內文欄寬：Medium 約 680px，中文字較寬，取 700px */
+  --content-width: 700px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+}
+
+/* ==========================================================================
+   頂部導覽列
+   ========================================================================== */
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: saturate(180%) blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+
+.topbar-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 57px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.brand {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.topbar-nav {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.topbar-nav a {
+  font-size: 14px;
+  color: var(--text-secondary);
+  text-decoration: none;
+}
+
+.topbar-nav a:hover {
+  color: var(--text);
+}
+
+.topbar-cta {
+  background: var(--accent);
+  color: #fff !important;
+  padding: 8px 16px;
+  border-radius: 99px;
+  font-size: 14px;
+}
+
+.topbar-cta:hover {
+  background: var(--accent-hover);
+}
+
+/* ==========================================================================
+   文章主體容器
+   ========================================================================== */
+
+main {
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* 麵包屑 */
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding-top: 32px;
+  font-size: 13px;
+  color: var(--text-tertiary);
+}
+
+.breadcrumb a {
+  color: var(--text-tertiary);
+  text-decoration: none;
+}
+
+.breadcrumb a:hover {
+  color: var(--text);
+  text-decoration: underline;
+}
+
+.breadcrumb [aria-current="page"] {
+  color: var(--text-secondary);
+}
+
+.post-header {
+  padding-top: 24px;
+}
+
+/* 標籤 */
+
+.post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.tag {
+  font-size: 13px;
+  color: var(--text-secondary);
+  background: var(--placeholder-bg);
+  padding: 5px 12px;
+  border-radius: 99px;
+  text-decoration: none;
+}
+
+.tag:hover {
+  background: var(--border);
+}
+
+.tag-lg {
+  font-size: 14px;
+  padding: 7px 16px;
+}
+
+/* 標題與副標 */
+
+.post-title {
+  margin: 0 0 12px;
+  font-family: var(--font-serif);
+  font-size: 42px;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+}
+
+.post-subtitle {
+  margin: 0 0 32px;
+  font-size: 21px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+  font-weight: 400;
+}
+
+/* 作者資訊列 */
+
+.post-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.avatar {
+  flex: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--text);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.avatar-lg {
+  width: 64px;
+  height: 64px;
+  font-size: 20px;
+}
+
+.meta-text {
+  min-width: 0;
+}
+
+.meta-line-1 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.author-name {
+  font-size: 15px;
+  text-decoration: none;
+}
+
+.author-name:hover {
+  text-decoration: underline;
+}
+
+.follow-btn {
+  border: none;
+  background: none;
+  padding: 0;
+  font-size: 14px;
+  color: var(--accent);
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.follow-btn:hover {
+  color: var(--accent-hover);
+}
+
+.follow-btn-lg {
+  background: var(--accent);
+  color: #fff;
+  padding: 9px 18px;
+  border-radius: 99px;
+  font-size: 14px;
+}
+
+.follow-btn-lg:hover {
+  background: var(--accent-hover);
+  color: #fff;
+}
+
+.meta-line-2 {
+  font-size: 14px;
+  color: var(--text-tertiary);
+  margin-top: 2px;
+}
+
+.dot {
+  margin: 0 6px;
+}
+
+/* 互動列 */
+
+.post-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 40px;
+}
+
+.actions-left,
+.actions-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  color: var(--text-tertiary);
+  font-size: 14px;
+  font-family: inherit;
+}
+
+.action-btn:hover {
+  color: var(--text);
+}
+
+/* ==========================================================================
+   首圖
+   ========================================================================== */
+
+.post-hero {
+  margin: 0 0 44px;
+}
+
+.hero-placeholder {
+  aspect-ratio: 16 / 9;
+  background: var(--placeholder-bg);
+  border: 1px dashed var(--border-strong);
+  border-radius: 4px;
+  display: grid;
+  place-items: center;
+  color: var(--text-tertiary);
+  font-size: 14px;
+}
+
+.post-hero figcaption {
+  margin-top: 10px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-tertiary);
+}
+
+/* ==========================================================================
+   內文
+   ========================================================================== */
+
+.post-body {
+  font-family: var(--font-serif);
+  font-size: 20px;
+  line-height: 1.8;
+  letter-spacing: 0.003em;
+}
+
+.placeholder-note {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  color: var(--text-tertiary);
+  background: var(--placeholder-bg);
+  border-left: 3px solid var(--border-strong);
+  padding: 14px 18px;
+  margin: 0 0 40px;
+}
+
+.post-body p {
+  margin: 0 0 32px;
+}
+
+.post-body h2 {
+  font-size: 30px;
+  line-height: 1.3;
+  letter-spacing: -0.015em;
+  margin: 48px 0 12px;
+}
+
+.post-body h3 {
+  font-size: 24px;
+  line-height: 1.35;
+  margin: 36px 0 8px;
+}
+
+.post-body a {
+  color: var(--text);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
+}
+
+.post-body a:hover {
+  color: var(--accent);
+}
+
+.post-body blockquote {
+  margin: 32px 0;
+  padding-left: 20px;
+  border-left: 3px solid var(--text);
+  font-style: italic;
+  color: var(--text-secondary);
+}
+
+.post-body ul,
+.post-body ol {
+  margin: 0 0 32px;
+  padding-left: 28px;
+}
+
+.post-body li {
+  margin-bottom: 10px;
+}
+
+.post-body code {
+  font-family: var(--font-mono);
+  font-size: 0.82em;
+  background: var(--code-bg);
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+
+.post-body pre {
+  background: var(--code-bg);
+  border-radius: 4px;
+  padding: 20px;
+  overflow-x: auto;
+  margin: 0 0 32px;
+}
+
+.post-body pre code {
+  background: none;
+  padding: 0;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.post-body hr {
+  border: none;
+  text-align: center;
+  margin: 48px 0;
+}
+
+/* Medium 招牌的三點分隔線 */
+.post-body hr::before {
+  content: "* * *";
+  letter-spacing: 0.6em;
+  color: var(--text-tertiary);
+  font-size: 20px;
+}
+
+/* ==========================================================================
+   文末標籤
+   ========================================================================== */
+
+.post-footer {
+  margin: 48px 0 0;
+}
+
+.footer-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* ==========================================================================
+   作者簡介卡
+   ========================================================================== */
+
+.author-card {
+  display: flex;
+  gap: 20px;
+  margin: 56px 0;
+  padding: 32px 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.author-card-body {
+  min-width: 0;
+}
+
+.author-card-name {
+  margin: 0 0 8px;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.author-card-bio {
+  margin: 0 0 16px;
+  font-size: 15px;
+  color: var(--text-secondary);
+}
+
+/* ==========================================================================
+   延伸閱讀
+   ========================================================================== */
+
+.more-posts {
+  margin-bottom: 80px;
+}
+
+.section-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0 0 24px;
+}
+
+.post-list {
+  display: grid;
+  gap: 28px;
+}
+
+.post-card {
+  display: flex;
+  gap: 20px;
+  text-decoration: none;
+  align-items: flex-start;
+}
+
+.card-thumb {
+  flex: none;
+  width: 120px;
+  aspect-ratio: 4 / 3;
+  background: var(--placeholder-bg);
+  border: 1px dashed var(--border-strong);
+  border-radius: 4px;
+}
+
+.card-body {
+  min-width: 0;
+}
+
+.card-title {
+  margin: 0 0 6px;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.post-card:hover .card-title {
+  text-decoration: underline;
+}
+
+.card-excerpt {
+  margin: 0 0 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  /* 限制兩行 */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.card-meta {
+  font-size: 13px;
+  color: var(--text-tertiary);
+}
+
+/* ==========================================================================
+   頁尾
+   ========================================================================== */
+
+.site-footer {
+  border-top: 1px solid var(--border);
+  padding: 28px 0;
+}
+
+.site-footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  font-size: 13px;
+  color: var(--text-tertiary);
+}
+
+.site-footer-nav {
+  display: flex;
+  gap: 20px;
+}
+
+.site-footer-nav a {
+  color: var(--text-tertiary);
+  text-decoration: none;
+}
+
+.site-footer-nav a:hover {
+  color: var(--text);
+}
+
+/* ==========================================================================
+   響應式
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  .breadcrumb {
+    padding-top: 20px;
+  }
+
+  .post-header {
+    padding-top: 20px;
+  }
+
+  .post-title {
+    font-size: 32px;
+  }
+
+  .post-subtitle {
+    font-size: 18px;
+    margin-bottom: 24px;
+  }
+
+  .post-body {
+    font-size: 18px;
+  }
+
+  .post-body h2 {
+    font-size: 25px;
+  }
+
+  .post-body h3 {
+    font-size: 21px;
+  }
+
+  /* 手機上導覽列只留品牌名與訂閱鈕 */
+  .topbar-nav a:not(.topbar-cta) {
+    display: none;
+  }
+
+  .card-thumb {
+    width: 90px;
+  }
+}
