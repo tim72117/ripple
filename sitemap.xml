@@ -1,13 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
-  <!-- 目前是單頁站：文章本身就在根目錄。
-       之後拆成多篇文章時，把每篇的實際網址各自列一筆。 -->
   <url>
     <loc>https://ripple.shuttle.tools/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <url>
+    <loc>https://ripple.shuttle.tools/aisaidok/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://ripple.shuttle.tools/aisaidok/onagent-ai-customer-service</loc>
     <lastmod>2026-09-12</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>1.0</priority>
+    <priority>0.8</priority>
   </url>
 
 </urlset>

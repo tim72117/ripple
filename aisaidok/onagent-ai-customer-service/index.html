@@ -1,0 +1,624 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- ===== 基本 SEO ===== -->
+  <!-- 標題控制在 60 字元內，關鍵字（onagent、AI 客服）放在前段，避免在 SERP 被截斷 -->
+  <title>如何用 onagent 製作 AI 客服：從工具定義到提示詞實戰 | AI 說這樣可以</title>
+  <meta name="description" content="用 onagent 與 Claude Code 打造美髮沙龍 AI 預約客服的完整實作：工具定義、kind 參數、Agent Bridge SDK 串接，以及提示詞調校踩過的四個坑。" />
+  <meta name="author" content="AI 說這樣可以" />
+  <link rel="canonical" href="https://ripple.shuttle.tools/aisaidok/onagent-ai-customer-service" />
+
+  <!-- ===== Open Graph（Facebook、LinkedIn、Threads 等社群分享） ===== -->
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="AI 說這樣可以" />
+  <meta property="og:locale" content="zh_TW" />
+  <meta property="og:title" content="我用 onagent 做了一個 AI 客服，然後發現難的根本不是 AI" />
+  <meta property="og:description" content="一個美髮沙龍的預約助理，從零到能真的幫客人訂位、查詢、取消。工具寫完只花了一個下午，提示詞卻改了三天。" />
+  <meta property="og:url" content="https://ripple.shuttle.tools/aisaidok/onagent-ai-customer-service" />
+  <meta property="og:image" content="https://ripple.shuttle.tools/og/onagent-ai-customer-service.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="onagent AI 客服對話畫面：助理列出設計師的可預約時段" />
+  <meta property="article:published_time" content="2026-09-12T10:00:00+08:00" />
+  <meta property="article:author" content="AI 說這樣可以" />
+  <meta property="article:section" content="技術" />
+  <meta property="article:tag" content="AI 客服" />
+  <meta property="article:tag" content="onagent" />
+  <meta property="article:tag" content="LLM 工具呼叫" />
+  <meta property="article:tag" content="提示詞工程" />
+
+  <!-- ===== Twitter / X 卡片 ===== -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="我用 onagent 做了一個 AI 客服，然後發現難的根本不是 AI" />
+  <meta name="twitter:description" content="工具寫完只花了一個下午，提示詞卻改了三天——這篇是那三天的筆記。" />
+  <meta name="twitter:image" content="https://ripple.shuttle.tools/og/onagent-ai-customer-service.png" />
+  <meta name="twitter:image:alt" content="onagent AI 客服對話畫面：助理列出設計師的可預約時段" />
+
+  <!-- ===== 結構化資料：BlogPosting ===== -->
+  <!-- Google 靠這段辨識作者、發布日期與文章主體，是拿到 rich result 的前提 -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "我用 onagent 做了一個 AI 客服，然後發現難的根本不是 AI",
+    "description": "用 onagent 與 Claude Code 打造美髮沙龍 AI 預約客服的完整實作：工具定義、kind 參數、Agent Bridge SDK 串接，以及提示詞調校踩過的四個坑。",
+    "image": "https://ripple.shuttle.tools/og/onagent-ai-customer-service.png",
+    "datePublished": "2026-09-12T10:00:00+08:00",
+    "dateModified": "2026-09-12T10:00:00+08:00",
+    "inLanguage": "zh-Hant",
+    "author": {
+      "@type": "Person",
+      "name": "AI 說這樣可以",
+      "url": "https://ripple.shuttle.tools/aisaidok/"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "AI 說這樣可以",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://ripple.shuttle.tools/logo.png"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://ripple.shuttle.tools/aisaidok/onagent-ai-customer-service"
+    },
+    "keywords": "onagent, AI 客服, LLM 工具呼叫, 提示詞工程, Claude Code, Agent Bridge SDK"
+  }
+  </script>
+
+  <!-- ===== 結構化資料：麵包屑 ===== -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "首頁", "item": "https://ripple.shuttle.tools/" },
+      { "@type": "ListItem", "position": 2, "name": "AI 說這樣可以", "item": "https://ripple.shuttle.tools/aisaidok/" },
+      { "@type": "ListItem", "position": 3, "name": "如何用 onagent 製作 AI 客服" }
+    ]
+  }
+  </script>
+
+  <!-- ===== 結構化資料：FAQ ===== -->
+  <!-- 對應文中實際回答過的問題，Google 可能在 SERP 直接展開 -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "onagent 的 action 和 query 工具有什麼差別？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "action 是做完就算了的操作，例如點按鈕或跳轉頁面，LLM 不需要知道結果。query 則會把回傳資料交還給 LLM 繼續推理，例如查詢可預約時段。若把 query 誤寫成 action，LLM 只會收到「執行成功」而拿不到資料，接著就會自行編造查詢結果，而且不會產生任何錯誤訊息。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "為什麼 AI 客服會算錯「明天」是哪一天？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "LLM 並不知道當下的真實日期，它會依訓練資料推算出一個它認為合理的日期。解法是提供一個回傳當日日期的工具，並在提示詞中明確要求：遇到相對日期詞彙時必須先呼叫該工具取得實際日期，不可從上下文自行推算。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "可以用 Claude Code 建立 onagent 的工具定義嗎？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "可以。執行 npx claude-skill-onagent 安裝官方 skill 後，直接用自然語言描述需求，Claude Code 就會完成登入、建立 app、產生工具 YAML 並推送到平台。工具的 description 是寫給 LLM 判讀的，由 LLM 撰寫通常比人工描述更完整，但 kind 欄位仍建議自行確認。"
+        }
+      }
+    ]
+  }
+  </script>
+
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+
+  <!-- ===== 頂部導覽列 ===== -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="/" aria-label="Ripple 首頁">
+        <svg class="brand-mark" viewBox="0 0 24 24" width="26" height="26" fill="none" aria-hidden="true">
+          <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.7" />
+          <path d="M6.5 12a5.5 5.5 0 0 1 5.5-5.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" opacity="0.75" />
+          <path d="M17.5 12a5.5 5.5 0 0 1-5.5 5.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" opacity="0.75" />
+          <path d="M3 12A9 9 0 0 1 12 3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" opacity="0.4" />
+          <path d="M21 12a9 9 0 0 1-9 9" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" opacity="0.4" />
+        </svg>
+        <span class="brand-name">Ripple</span>
+      </a>
+      <nav class="topbar-nav">
+        <a href="/">文章列表</a>
+        <a href="/aisaidok/">關於</a>
+        <a class="topbar-cta" href="#">訂閱</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- 可見的麵包屑：對應 head 裡的 BreadcrumbList 結構化資料 -->
+    <nav class="breadcrumb" aria-label="麵包屑導覽">
+      <a href="/">首頁</a>
+      <span aria-hidden="true">›</span>
+      <a href="/aisaidok/">AI 說這樣可以</a>
+      <span aria-hidden="true">›</span>
+      <span aria-current="page">如何用 onagent 製作 AI 客服</span>
+    </nav>
+
+    <article class="post" itemscope itemtype="https://schema.org/BlogPosting">
+
+      <!-- ===== 文章標題區 ===== -->
+      <header class="post-header">
+        <div class="post-tags">
+          <a class="tag" href="#">AI 客服</a>
+          <a class="tag" href="#">onagent</a>
+          <a class="tag" href="#">LLM 工具呼叫</a>
+        </div>
+
+        <h1 class="post-title" itemprop="headline">我用 onagent 做了一個 AI 客服，然後發現難的根本不是 AI</h1>
+        <p class="post-subtitle">
+          一個美髮沙龍的預約助理，從零到能真的幫客人訂位、查詢、取消。
+          工具寫完只花了一個下午，提示詞卻改了三天——這篇是那三天的筆記。
+        </p>
+
+        <!-- 作者資訊列 -->
+        <div class="post-meta">
+          <div class="avatar" aria-hidden="true">AI</div>
+          <div class="meta-text">
+            <div class="meta-line-1">
+              <a class="author-name" href="/aisaidok/" itemprop="author" itemscope itemtype="https://schema.org/Person"><span itemprop="name">AI 說這樣可以</span></a>
+              <button type="button" class="follow-btn">追蹤</button>
+            </div>
+            <div class="meta-line-2">
+              <span>8 分鐘閱讀</span>
+              <span class="dot">·</span>
+              <time datetime="2026-09-12T10:00:00+08:00" itemprop="datePublished">2026 年 9 月 12 日</time>
+            </div>
+          </div>
+        </div>
+
+        <!-- 互動列 -->
+        <div class="post-actions">
+          <div class="actions-left">
+            <button type="button" class="action-btn" aria-label="拍手">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
+                <path d="M11 11.5V6a1.5 1.5 0 0 1 3 0v5" />
+                <path d="M14 10V4.5a1.5 1.5 0 0 1 3 0V11" />
+                <path d="M17 10.5V7a1.5 1.5 0 0 1 3 0v8a6 6 0 0 1-6 6h-2a6 6 0 0 1-5.2-3l-2.3-4a1.5 1.5 0 0 1 2.6-1.5L9 15" />
+                <path d="M11 11.5V8a1.5 1.5 0 0 0-3 0v7" />
+              </svg>
+              <span>128</span>
+            </button>
+            <button type="button" class="action-btn" aria-label="留言">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
+                <path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9 9 0 0 1-3.9-.9L3 20.5l1.5-4.1A8.4 8.4 0 0 1 12 3.1a8.4 8.4 0 0 1 9 8.4z" />
+              </svg>
+              <span>16</span>
+            </button>
+          </div>
+          <div class="actions-right">
+            <button type="button" class="action-btn" aria-label="收藏">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
+                <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+              </svg>
+            </button>
+            <button type="button" class="action-btn" aria-label="分享">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
+                <path d="M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7" />
+                <path d="M16 6l-4-4-4 4" />
+                <path d="M12 2v14" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <!-- ===== 首圖 ===== -->
+      <figure class="post-hero">
+        <div class="hero-placeholder">沙龍預約助理的對話畫面</div>
+        <figcaption>客人說「我下週想找 Amy 弄頭髮」，助理先查今天日期，再列出 Amy 的空檔。</figcaption>
+      </figure>
+
+      <!-- ===== 內文 ===== -->
+      <div class="post-body" itemprop="articleBody">
+
+        <p>
+          先講結論：用 onagent 把一個 AI 客服接上網站，程式碼的部分真的不難。
+          難的是你得先想清楚「這個客服到底能做什麼」，而且想得比你以為的還要細。
+        </p>
+
+        <p>
+          我拿一個美髮沙龍的預約助理當練習題。需求聽起來很單純——讓客人用講的就能查有沒有空位、訂位、看自己訂了什麼、取消。
+          四件事，聽起來一個下午就能做完。
+        </p>
+
+        <p>結果工具真的一個下午就寫完了。然後我花了三天在改提示詞。</p>
+
+        <h2>onagent 在做的事</h2>
+
+        <p>
+          先講一下分工，不然後面的坑會看不懂為什麼是坑。
+        </p>
+
+        <p>
+          傳統上你要自己做一個會操作網站的 AI，得自己架 LLM agent 迴圈、自己管對話狀態、自己處理工具呼叫的往返。
+          onagent 把這段包掉了：你只要<strong>描述你的網站有哪些操作</strong>，它負責把使用者講的自然語言轉成實際的工具呼叫。
+        </p>
+
+        <p>所以你的工作變成兩件事：</p>
+
+        <ol>
+          <li><strong>定義工具</strong>——這個網站能做什麼，每個操作要什麼參數、回什麼資料</li>
+          <li><strong>寫提示詞</strong>——告訴 LLM 什麼時候該用哪個工具，以及怎麼跟客人講話</li>
+        </ol>
+
+        <p>
+          第一件事是工程問題，有標準答案。第二件事沒有，而且是真正花時間的地方。
+        </p>
+
+        <h2>第一步：讓 Claude Code 幫你把工具推上去</h2>
+
+        <p>
+          工具定義是 YAML，理論上你可以自己寫、自己用 CLI 推。但 onagent 有出一個
+          Claude Code 的 skill，直接讓 Claude Code 代勞——這是我推薦的方式，
+          原因等一下講。
+        </p>
+
+        <p>先裝 skill：</p>
+
+        <pre><code>npx claude-skill-onagent          # 裝到專案的 ./.claude/skills/
+npx claude-skill-onagent --user   # 或裝到 ~/.claude/skills/</code></pre>
+
+        <p>
+          裝完之後，在 Claude Code 裡直接用講的就行。我當時大概是這樣講的：
+        </p>
+
+        <blockquote>
+          幫我在 onagent 建一個 support-app，這是美髮沙龍的預約助理。
+          需要四個工具：查空位、訂位、查自己的預約、取消。查空位要能用日期跟設計師篩選。
+        </blockquote>
+
+        <p>
+          然後它就把整套流程跑完了：登入（<code>onagent login --web</code> 會自動開瀏覽器）、
+          建 app、產生四份 tool YAML、一個一個推上去。
+        </p>
+
+        <pre><code>onagent app create support-app
+onagent tool create support-app check_availability.yaml
+onagent tool create support-app book_appointment.yaml
+onagent tool create support-app get_my_appointments.yaml
+onagent tool create support-app get_today_date.yaml</code></pre>
+
+        <p>
+          <strong>為什麼推薦這樣做</strong>：不是因為省打字，而是因為 tool 的
+          <code>description</code> 是寫給 LLM 看的，讓另一個 LLM 來寫它意外地合適。
+          我自己寫會寫成「查詢可預約時段」，Claude Code 寫出來的是：
+        </p>
+
+        <pre><code>description: >
+  Looks up which appointment slots are open or already booked.
+  Call this whenever the visitor asks about a stylist's
+  availability, what times are open, or wants to see the
+  schedule — not for questions unrelated to booking.</code></pre>
+
+        <p>
+          差別在後面那句「<em>不是給跟預約無關的問題用的</em>」。
+          我不會想到要寫這種話，但這正是 LLM 判斷「現在該不該呼叫這個工具」時需要的資訊。
+        </p>
+
+        <p>
+          當然它也不是每次都對。有幾個地方我還是得回頭改——最重要的是下面這個欄位。
+        </p>
+
+        <h3>唯一一定要自己確認的：kind</h3>
+
+        <p>
+          <code>action</code> 是「做完就算了」——例如點一個按鈕、跳轉頁面，LLM 不需要知道結果。
+          <code>query</code> 則是「我要拿資料回來繼續推理」——查空位這種就是，
+          LLM 拿到有哪些時段之後，才能接著跟客人討論。
+        </p>
+
+        <p>
+          這四個工具裡有三個是 <code>query</code>。連「訂位」都是——因為 LLM 需要知道
+          訂成功了沒，才能跟客人說「好了」還是「抱歉剛被搶走了」。
+        </p>
+
+        <blockquote>
+          把 query 寫成 action，LLM 會收到「執行成功」四個字，然後開始編造它以為的查詢結果。
+        </blockquote>
+
+        <p>
+          這個坑我踩得很痛，因為它<strong>不會報錯</strong>。功能看起來是通的，LLM 也很有自信地回答你，
+          只是內容全是它自己掰的。後面會再提到這件事。
+        </p>
+
+        <h2>第二步：接上前端</h2>
+
+        <p>
+          工具定義好之後，前端這邊用 Agent Bridge SDK 把每個工具的實作接上去。
+          大致長這樣：
+        </p>
+
+        <pre><code>import { AgentBridge, defineTool } from '@onagent/bridge'
+
+const bridge = new AgentBridge({
+  url: WS_URL,
+  appId: APP_ID,
+  apiKey: API_KEY,
+
+  onAssistantMessage: (text) => {
+    // AI 要跟客人講的話
+    appendMessage('assistant', text)
+  },
+
+  tools: [
+    defineTool(
+      'check_availability',
+      (raw) => validateArgs(raw),      // 驗證參數
+      (args) => findOpenSlots(args),   // 實際查詢
+    ),
+    // ... 其他三個工具
+  ],
+})</code></pre>
+
+        <p>
+          <code>defineTool</code> 分成驗證跟執行兩段，這個設計我一開始覺得囉唆，
+          後來發現很值得——LLM 傳來的參數<strong>不保證符合你的 schema</strong>，
+          它可能少傳必填欄位、可能把 enum 傳成別的字串。驗證那段就是你的防線。
+        </p>
+
+        <p>到這邊，程式碼的部分就結束了。真的，就這樣。</p>
+
+        <hr />
+
+        <h2>然後就是三天的提示詞地獄</h2>
+
+        <p>
+          功能都通了，我很開心地開始測試，然後遇到一連串完全不在預期內的問題。
+        </p>
+
+        <h3>問題一：「明天」是哪天？</h3>
+
+        <p>
+          客人說「明天有空位嗎」，LLM 很自信地去查了一個日期。錯的日期。
+        </p>
+
+        <p>
+          因為 LLM 不知道今天幾號。它的訓練資料有截止日期，它會用一個它「覺得」合理的日期去推算，
+          結果就是查到三個月前的空檔。
+        </p>
+
+        <p>
+          解法是加一個專門的工具 <code>get_today_date</code>，然後在提示詞裡明確要求：
+        </p>
+
+        <pre><code>If the visitor uses a relative date phrase (e.g. "today,"
+"tomorrow," "this Friday," "next week"), call get_today_date
+with format: "date" first to resolve it to an actual
+YYYY-MM-DD date before calling check_availability.
+
+Don't guess what today's date is, or compute a relative date,
+from context alone.</code></pre>
+
+        <p>
+          注意最後那句「<em>不要用上下文猜今天幾號</em>」。少了這句，它還是會猜。
+          你必須把「不要做什麼」也寫清楚，只寫「要做什麼」是不夠的。
+        </p>
+
+        <h3>問題二：查不到 ≠ 被訂走</h3>
+
+        <p>
+          我的查詢工具只回傳「有設計師排班的時段」。所以如果週日整天沒人上班，回傳結果就不會有週日。
+        </p>
+
+        <p>
+          LLM 看到沒有週日，就跟客人說「週日都被訂滿了喔」。
+        </p>
+
+        <p>
+          這完全是合理的誤解——資料本身沒有錯，是<strong>資料的語意</strong>沒有講清楚。
+          後來我在提示詞裡補了一段，講明白這兩件事的差別：
+        </p>
+
+        <pre><code>check_availability only returns slots where a stylist is
+actually scheduled — a time that does not appear in the result
+means no stylist works that slot at all in this window, not
+that it's booked.
+
+For a slot that DOES appear, check its `available` field:
+true means open, false means already booked.</code></pre>
+
+        <p>
+          這類問題的共通點是：<strong>你以為很明顯的事，對 LLM 一點都不明顯。</strong>
+          你的資料結構背後那些「大家都知道」的商業邏輯，它沒有那個「大家」的脈絡。
+        </p>
+
+        <h3>問題三：它把內部 ID 唸給客人聽</h3>
+
+        <p>
+          查詢結果每個時段都有 <code>slotId</code>（給程式用的識別碼）跟 <code>date</code>（<code>2026-09-15</code> 這種格式）。
+        </p>
+
+        <p>
+          然後 AI 就跟客人說：「您可以選擇 2026-09-15 的 10am，slot ID 是 a7f3c...」
+        </p>
+
+        <p>
+          技術上完全正確，體驗上非常荒謬。沒有一個櫃檯人員會這樣講話。
+          所以提示詞又多了一段，明確區分「哪些欄位是給你內部用的、哪些是可以講出口的」：
+        </p>
+
+        <pre><code>use the slot's `day` field (a friendly weekday label) for this,
+not its `date` field (the YYYY-MM-DD value, which is only meant
+for you to track internally and pass to book_appointment, not
+to say aloud).</code></pre>
+
+        <h3>問題四：取消訂位時它用錯了 ID</h3>
+
+        <p>
+          這個最危險。客人說「幫我取消」，LLM 從<strong>查詢空位</strong>的結果裡挑了一個 slotId 就送去取消。
+        </p>
+
+        <p>
+          那個 slotId 不是這個客人的預約，是別人的，或根本是個空時段。
+        </p>
+
+        <p>
+          正確流程應該是：先查「這個客人自己的預約」，從那裡面拿 slotId，再取消。
+          但如果不講，LLM 只會看到「我需要一個 slotId」然後從手邊任何有 slotId 的地方拿一個。
+        </p>
+
+        <pre><code>If the visitor wants to cancel a booking, first call
+get_my_appointments to find the exact slotId of the booking
+they mean — never guess or reuse a slotId from
+check_availability for this.
+
+Only cancel a slotId that get_my_appointments actually
+returned; if it isn't in that list, tell the visitor you can't
+find that booking rather than attempting the cancellation
+anyway.</code></pre>
+
+        <p>
+          這裡的重點是最後那句：<strong>明確告訴它失敗時該怎麼辦</strong>。
+          否則 LLM 傾向於「想辦法完成任務」，而不是「承認做不到」。
+        </p>
+
+        <hr />
+
+        <h2>回頭看，提示詞其實是在寫規格書</h2>
+
+        <p>
+          三天之後我的提示詞從五行變成七十行。回頭讀那七十行，我發現它們根本不是「提示詞」，
+          而是一份<strong>寫給非人類同事看的工作規範</strong>：
+        </p>
+
+        <ul>
+          <li>什麼情況該用哪個工具（以及不該用）</li>
+          <li>每個欄位的語意，包括「沒出現」代表什麼</li>
+          <li>哪些資料是內部的、哪些能講給客人聽</li>
+          <li>多步驟流程的正確順序</li>
+          <li>做不到的時候要說什麼，而不是硬幹</li>
+        </ul>
+
+        <p>
+          如果今天來的是一個真人新員工，你其實也要講這些。差別只在於新人會問「這個 slotId 是什麼意思」，
+          而 LLM 不會問——它會直接猜，而且猜得很有自信。
+        </p>
+
+        <blockquote>
+          LLM 不會告訴你它不懂。它只會用它的理解繼續做下去。
+        </blockquote>
+
+        <h2>幾個我下次會提早做的事</h2>
+
+        <ol>
+          <li>
+            <strong>讓 Claude Code 產 tool，但自己檢查 kind</strong>——
+            description 它寫得比我好，<code>kind</code> 它會猜。
+            而這個欄位寫錯不會報錯，只會讓 AI 開始編故事，是最難查的一種 bug。
+          </li>
+          <li>
+            <strong>先跑一次「回傳什麼」的確認</strong>——推完工具之後，
+            在 Playground 隨便問一句，看 AI 講出來的內容是不是真的來自你的資料。
+            如果它答得出來但你的 log 裡沒有那筆查詢，那就是 <code>kind</code> 錯了。
+          </li>
+          <li>
+            <strong>把「不要做什麼」也寫進去</strong>——只寫正面指示，它會用預設行為填補空白，
+            而預設行為通常就是猜。
+          </li>
+          <li>
+            <strong>用真人的標準測試</strong>——不要只測「幫我查週二有沒有空」，
+            要測「欸我下禮拜想弄頭髮」這種真人講話的方式。
+          </li>
+        </ol>
+
+        <h2>所以值得嗎？</h2>
+
+        <p>
+          值得。三天聽起來很多，但這三天解決的是「這個客服到底該怎麼工作」，
+          而這件事不管你用什麼技術做都躲不掉。
+        </p>
+
+        <p>
+          onagent 幫我省掉的是另外那一大塊——連線管理、對話狀態、工具呼叫的往返、重連、配額。
+          那些如果自己刻，三天大概只夠把 WebSocket 的重連寫對。
+          Claude Code 又再省掉建 app、產 YAML、推工具那些瑣事。
+        </p>
+
+        <p>
+          有趣的是，這兩層自動化都不能幫我做<strong>那三天的事</strong>。
+          它們能幫我把想法變成程式碼，但沒辦法幫我決定「查不到空位」跟「被訂走了」是不是同一件事——
+          那要有人真的去想沙龍是怎麼運作的。
+        </p>
+
+        <p>
+          最後那個沙龍助理現在可以正常接待客人：查空位、訂位、查自己的預約、取消。
+          客人講「我下週想找 Amy 弄頭髮」，它會先確認今天幾號、算出下週的日期、
+          查 Amy 的班表、把有空的時段用清單列出來，然後等客人選。
+        </p>
+
+        <p>
+          全程沒有一句話是我寫死的。但那七十行規範，每一行都是我用踩坑換來的。
+        </p>
+
+      </div>
+
+      <!-- ===== 文末標籤 ===== -->
+      <footer class="post-footer">
+        <div class="footer-tags">
+          <a class="tag tag-lg" href="#">AI 客服</a>
+          <a class="tag tag-lg" href="#">onagent</a>
+          <a class="tag tag-lg" href="#">LLM 工具呼叫</a>
+          <a class="tag tag-lg" href="#">提示詞工程</a>
+        </div>
+      </footer>
+
+    </article>
+
+    <!-- ===== 作者簡介卡 ===== -->
+    <section class="author-card">
+      <div class="avatar avatar-lg" aria-hidden="true">AI</div>
+      <div class="author-card-body">
+        <h2 class="author-card-name">AI 說這樣可以</h2>
+        <p class="author-card-bio">
+          寫程式、踩坑、然後把坑寫下來。專門記錄那些「照著文件做卻不會動」的瞬間，
+          以及 AI 很有自信地給我錯答案的每一天。
+        </p>
+        <button type="button" class="follow-btn follow-btn-lg">追蹤</button>
+      </div>
+    </section>
+
+    <!-- ===== 回首頁 =====
+         目前只有這一篇文章，所以先放一個導回列表的區塊，
+         而不是連到不存在的文章（那會是 404，對 SEO 也不利）。
+         之後有第二篇時，改回 .post-list 的卡片形式。 -->
+    <section class="more-posts">
+      <div class="back-home">
+        <p class="back-home-text">看看其他文章</p>
+        <a class="back-home-link" href="/">回到文章列表 →</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== 頁尾 ===== -->
+  <footer class="site-footer">
+    <div class="site-footer-inner">
+      <a href="/">© 2026 AI 說這樣可以</a>
+      <nav class="site-footer-nav">
+        <a href="/">文章列表</a>
+        <a href="/aisaidok/">關於</a>
+        <a href="/sitemap.xml">Sitemap</a>
+      </nav>
+    </div>
+  </footer>
+
+</body>
+</html>
