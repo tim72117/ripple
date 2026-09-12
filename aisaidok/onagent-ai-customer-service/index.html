@@ -18,9 +18,10 @@
   <meta property="og:title" content="我用 onagent 做了一個 AI 客服，然後發現難的根本不是 AI" />
   <meta property="og:description" content="一個美髮沙龍的預約助理，從零到能真的幫客人訂位、查詢、取消。工具寫完只花了十分鐘，提示詞卻改了三小時。" />
   <meta property="og:url" content="https://ripple.shuttle.tools/aisaidok/onagent-ai-customer-service/" />
-  <meta property="og:image" content="https://ripple.shuttle.tools/og/onagent-ai-customer-service.png" />
+  <meta property="og:image" content="https://ripple.shuttle.tools/aisaidok/onagent-ai-customer-service/og.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
+  <meta property="og:image:type" content="image/png" />
   <meta property="og:image:alt" content="onagent AI 客服對話畫面：助理列出設計師的可預約時段" />
   <meta property="article:published_time" content="2026-09-12T10:00:00+08:00" />
   <meta property="article:author" content="AI 說這樣可以" />
@@ -34,7 +35,7 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="我用 onagent 做了一個 AI 客服，然後發現難的根本不是 AI" />
   <meta name="twitter:description" content="工具寫完只花了十分鐘，提示詞卻改了三小時——這篇是那三小時的筆記。" />
-  <meta name="twitter:image" content="https://ripple.shuttle.tools/og/onagent-ai-customer-service.png" />
+  <meta name="twitter:image" content="https://ripple.shuttle.tools/aisaidok/onagent-ai-customer-service/og.png" />
   <meta name="twitter:image:alt" content="onagent AI 客服對話畫面：助理列出設計師的可預約時段" />
 
   <!-- ===== 結構化資料：BlogPosting ===== -->
@@ -45,7 +46,7 @@
     "@type": "BlogPosting",
     "headline": "我用 onagent 做了一個 AI 客服，然後發現難的根本不是 AI",
     "description": "用 onagent 與 Claude Code 打造美髮沙龍 AI 預約客服的完整實作：工具定義、kind 參數、Agent Bridge SDK 串接，以及提示詞調校踩過的四個坑。",
-    "image": "https://ripple.shuttle.tools/og/onagent-ai-customer-service.png",
+    "image": "https://ripple.shuttle.tools/aisaidok/onagent-ai-customer-service/og.png",
     "datePublished": "2026-09-12T10:00:00+08:00",
     "dateModified": "2026-09-12T10:00:00+08:00",
     "inLanguage": "zh-Hant",
@@ -182,43 +183,33 @@
 
         <!-- 互動列 -->
         <div class="post-actions">
-          <div class="actions-left">
-            <button type="button" class="action-btn" aria-label="拍手">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
-                <path d="M11 11.5V6a1.5 1.5 0 0 1 3 0v5" />
-                <path d="M14 10V4.5a1.5 1.5 0 0 1 3 0V11" />
-                <path d="M17 10.5V7a1.5 1.5 0 0 1 3 0v8a6 6 0 0 1-6 6h-2a6 6 0 0 1-5.2-3l-2.3-4a1.5 1.5 0 0 1 2.6-1.5L9 15" />
-                <path d="M11 11.5V8a1.5 1.5 0 0 0-3 0v7" />
-              </svg>
-              <span>128</span>
-            </button>
-            <button type="button" class="action-btn" aria-label="留言">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
-                <path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9 9 0 0 1-3.9-.9L3 20.5l1.5-4.1A8.4 8.4 0 0 1 12 3.1a8.4 8.4 0 0 1 9 8.4z" />
-              </svg>
-              <span>16</span>
-            </button>
-          </div>
           <div class="actions-right">
-            <button type="button" class="action-btn" aria-label="收藏">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
-                <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
-              </svg>
-            </button>
-            <button type="button" class="action-btn" aria-label="分享">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
+            <!-- 這一列只留分享：複製網址是純前端就能完成、點了有實際結果的操作。
+                 拍手、留言、收藏都需要帳號或後端才能真的運作，先前顯示的是寫死的
+                 假數字，因此一併移除，等有後端再加回來。 -->
+            <button type="button" class="action-btn js-share" data-label-idle="複製連結" data-label-done="已複製連結">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="18" height="18" aria-hidden="true">
                 <path d="M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7" />
                 <path d="M16 6l-4-4-4 4" />
                 <path d="M12 2v14" />
               </svg>
+              <span class="js-share-label">複製連結</span>
             </button>
           </div>
         </div>
       </header>
 
       <!-- ===== 首圖 ===== -->
+      <!-- WebP 比 PNG 小約七成，但用 <picture> 保留 PNG 讓舊瀏覽器仍有圖。
+           width/height 要寫實際像素（2400×1260），瀏覽器才能在圖載入前
+           先算出版面高度、避免文字被往下推（CLS）。
+           首圖在第一畫面內，不能用 loading="lazy"，否則反而延後顯示。 -->
       <figure class="post-hero">
-        <div class="hero-placeholder">沙龍預約助理的對話畫面</div>
+        <picture>
+          <source srcset="hero.webp" type="image/webp" />
+          <img src="hero.png" width="2400" height="1260"
+               alt="美髮沙龍預約助理的對話：客人說「我下週想找 Amy 弄頭髮」，助理回覆 Amy 下週的三個空檔（週三下午 2:00、週五上午 11:00、週六下午 4:30）；右側並列顯示這一輪實際呼叫的三個工具 get_today_date、check_availability、book_appointment。" />
+        </picture>
         <figcaption>客人說「我下週想找 Amy 弄頭髮」，助理先查今天日期，再列出 Amy 的空檔。</figcaption>
       </figure>
 
@@ -610,6 +601,63 @@ anyway.</code></pre>
       <a href="/">© 2026 Ripple</a>
     </div>
   </footer>
+
+  <script>
+    // 分享：複製本頁網址到剪貼簿。
+    //
+    // 複製的是 canonical 而不是 location.href——後者會把 ?utm_source=... 這類
+    // 追蹤參數、或 #section 錨點一起分享出去，收到連結的人看到的網址會跟原文不一致。
+    //
+    // navigator.clipboard 需要安全來源（HTTPS 或 localhost），在純 HTTP 下不存在；
+    // 憑證還沒簽好前 ripple.shuttle.tools 走 HTTP 就會落到這個情況，因此保留
+    // execCommand 的退路，讓按鈕在任何情境下都不會按了沒反應。
+    (function () {
+      var btn = document.querySelector('.js-share');
+      if (!btn) return;
+
+      var label = btn.querySelector('.js-share-label');
+      var canonical = document.querySelector('link[rel="canonical"]');
+      var url = canonical ? canonical.href : location.href;
+      var timer;
+
+      function feedback(text) {
+        label.textContent = text;
+        btn.classList.add('is-copied');
+        clearTimeout(timer);
+        timer = setTimeout(function () {
+          label.textContent = btn.dataset.labelIdle;
+          btn.classList.remove('is-copied');
+        }, 2000);
+      }
+
+      function fallback() {
+        var ta = document.createElement('textarea');
+        ta.value = url;
+        // 不能用 display:none，隱藏的元素選取不到，複製會靜默失敗
+        ta.setAttribute('readonly', '');
+        ta.style.position = 'fixed';
+        ta.style.top = '-9999px';
+        document.body.appendChild(ta);
+        ta.select();
+        var ok = false;
+        try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+        document.body.removeChild(ta);
+        return ok;
+      }
+
+      btn.addEventListener('click', function () {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(url).then(
+            function () { feedback(btn.dataset.labelDone); },
+            // 使用者拒絕剪貼簿權限時也會進到這裡，再試一次 execCommand
+            function () { feedback(fallback() ? btn.dataset.labelDone : '複製失敗'); }
+          );
+        } else {
+          feedback(fallback() ? btn.dataset.labelDone : '複製失敗');
+        }
+      });
+    })();
+  </script>
 
 </body>
 </html>
