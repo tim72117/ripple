@@ -9,8 +9,10 @@
   --bg: #ffffff;
   --border: #e6e6e6;
   --border-strong: #d4d4d4;
-  --accent: #1a8917;          /* Medium 的招牌綠 */
-  --accent-hover: #156f12;
+  /* 系統色：藍色。原本沿用 Medium 的品牌綠，跟本站識別沒有關係。
+     只用在連結、按鈕這類可互動或需要指路的元素，不作裝飾用。 */
+  --accent: #1257c7;
+  --accent-hover: #0e429a;
   --code-bg: #f2f2f2;
   --placeholder-bg: #f7f7f7;
 
@@ -21,6 +23,10 @@
 
   /* 內文欄寬：Medium 約 680px，中文字較寬，取 700px */
   --content-width: 700px;
+
+  /* 頁面左右留白。導覽列、內文、頁尾共用同一個值，三者的內容才會
+     對齊在同一條垂直線上；手機版在下方的斷點一次改這個變數即可。 */
+  --gutter: 24px;
 }
 
 * {
@@ -66,7 +72,7 @@ a {
 .topbar-inner {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 var(--gutter);
   height: 57px;
   display: flex;
   align-items: center;
@@ -139,7 +145,15 @@ main {
   flex: 1;
   max-width: var(--content-width);
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 var(--gutter);
+  /* flex 子元素的預設 min-width 是 auto，不會縮到比內容的固有寬度更小；
+     再加上 max-width 只限制上限、不阻止內容把容器撐開，文章裡程式碼區塊的
+     長行就會把 main 推得比視窗還寬，整頁因此可以左右捲動
+     （.post-body pre 的 overflow-x 也永遠不會生效）。
+     min-width:0 解除 flex 的下限，width:100% 把寬度釘在視窗上，
+     長行才會留在程式碼區塊裡自己捲。 */
+  min-width: 0;
+  width: 100%;
 }
 
 /* ==========================================================================
@@ -322,17 +336,19 @@ main {
 
 /* 互動列 */
 
+/* 拍手／留言／收藏都移除後，這一列只剩右側的分享鈕。
+   原本的 space-between 是用來把左右兩組推到兩端的，現在只剩一組，
+   會變成貼齊左邊，因此改成 flex-end 讓它靠右。 */
 .post-actions {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   padding: 12px 0;
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
   margin-bottom: 40px;
 }
 
-.actions-left,
 .actions-right {
   display: flex;
   align-items: center;
@@ -356,23 +372,44 @@ main {
   color: var(--text);
 }
 
+/* 複製成功後短暫轉成系統色，讓「已複製」有視覺回饋而不只是換字。 */
+.action-btn.is-copied,
+.action-btn.is-copied:hover {
+  color: var(--accent);
+}
+
 /* ==========================================================================
    首圖
    ========================================================================== */
 
+/* 首圖突破 700px 的內文欄寬，往兩側各延伸到最多 1040px。
+   calc(50% - min(50vw, 520px)) 是負的左右外距，把元素從置中的欄位
+   往外推回視窗邊；這張圖資訊密度高，需要這個寬度才看得清右側的工具呼叫。 */
 .post-hero {
-  margin: 0 0 44px;
+  width: 100vw;
+  max-width: 1040px;
+  margin: 0 calc(50% - min(50vw, 520px)) 44px;
 }
 
-.hero-placeholder {
-  aspect-ratio: 16 / 9;
-  background: var(--placeholder-bg);
-  border: 1px dashed var(--border-strong);
-  border-radius: 4px;
-  display: grid;
-  place-items: center;
-  color: var(--text-tertiary);
-  font-size: 14px;
+/* img 的 width/height 屬性是實際像素（2400×1260），用來保留版面比例；
+   這裡再把顯示寬度壓回容器寬，height:auto 維持比例不變形。 */
+.post-hero img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+/* 手機上不做延伸，維持與內文同寬（頁面留白已經很窄了）。 */
+@media (max-width: 768px) {
+  .post-hero {
+    width: auto;
+    margin: 0 0 32px;
+  }
+
+  .post-hero img {
+    border-radius: 5px;
+  }
 }
 
 .post-hero figcaption {
@@ -639,7 +676,7 @@ main {
 .site-footer-inner {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 var(--gutter);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -679,6 +716,12 @@ main {
    ========================================================================== */
 
 @media (max-width: 768px) {
+  /* 手機螢幕窄，24px 的左右留白會把本來就不寬的中文內文再擠掉一截，
+     縮到 18px；三個共用容器一起變動，對齊關係不受影響。 */
+  :root {
+    --gutter: 18px;
+  }
+
   .breadcrumb {
     padding-top: 20px;
   }
@@ -715,5 +758,20 @@ main {
 
   .card-thumb {
     width: 90px;
+  }
+
+  /* 這個區塊自己還有 32px 的左右內距，疊在頁面留白之上會讓裡面的文字
+     被擠成很窄的一條；手機上收斂成 20/22px。 */
+  .back-home {
+    padding: 22px 20px;
+  }
+
+  /* 延伸閱讀與頁尾之間的 80px 在手機上過深，幾乎多出一個空白畫面。 */
+  .more-posts {
+    margin-bottom: 48px;
+  }
+
+  .site-footer {
+    padding: 22px 0;
   }
 }
