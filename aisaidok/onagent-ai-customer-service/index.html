@@ -231,7 +231,8 @@
       <div class="post-body" itemprop="articleBody">
 
         <p>
-          先講結論：用 onagent 把一個 AI 客服接上網站，程式碼的部分真的不難。
+          先講結論：用 <a href="https://onagent.shuttle.tools/" target="_blank" rel="noopener">onagent</a>
+          把一個 AI 客服接上網站，程式碼的部分真的不難。
           難的是你得先想清楚「這個客服到底能做什麼」，而且想得比你以為的還要細。
         </p>
 
@@ -268,8 +269,8 @@
 
         <p>
           工具定義是 YAML，理論上你可以自己寫、自己用 CLI 推。但 onagent 有出一個
-          Claude Code 的 skill，直接讓 Claude Code 代勞——這是我推薦的方式，
-          原因等一下講。
+          <a href="https://www.npmjs.com/package/@onagent/claude-skill" target="_blank" rel="noopener">Claude Code 的 skill</a>，
+          直接讓 Claude Code 代勞——這是我推薦的方式，原因等一下講。
         </p>
 
         <p>先裝 skill：</p>
@@ -548,7 +549,8 @@ anyway.</code></pre>
         </p>
 
         <p>
-          onagent 幫我省掉的是另外那一大塊——連線管理、對話狀態、工具呼叫的往返、重連、配額。
+          <a href="https://onagent.shuttle.tools/" target="_blank" rel="noopener">onagent</a>
+          幫我省掉的是另外那一大塊——連線管理、對話狀態、工具呼叫的往返、重連、配額。
           那些如果自己刻，三天大概只夠把 WebSocket 的重連寫對。
           Claude Code 又再省掉建 app、產 YAML、推工具那些瑣事。
         </p>
