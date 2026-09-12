@@ -9,7 +9,7 @@
   <link rel="canonical" href="https://ripple.shuttle.tools/" />
 
   <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="AI 說這樣可以" />
+  <meta property="og:site_name" content="Ripple" />
   <meta property="og:locale" content="zh_TW" />
   <meta property="og:title" content="AI 說這樣可以 — 技術部落格" />
   <meta property="og:description" content="寫程式、踩坑、然後把坑寫下來。" />
@@ -38,33 +38,21 @@
   <header class="topbar">
     <div class="topbar-inner">
       <a class="brand" href="/" aria-label="Ripple 首頁">
-        <svg class="brand-mark" viewBox="0 0 24 24" width="26" height="26" fill="none" aria-hidden="true">
-          <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.7" />
-          <path d="M6.5 12a5.5 5.5 0 0 1 5.5-5.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" opacity="0.75" />
-          <path d="M17.5 12a5.5 5.5 0 0 1-5.5 5.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" opacity="0.75" />
-          <path d="M3 12A9 9 0 0 1 12 3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" opacity="0.4" />
-          <path d="M21 12a9 9 0 0 1-9 9" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" opacity="0.4" />
+        <svg class="brand-mark" viewBox="0 0 24 24" width="24" height="24" fill="none" aria-hidden="true">
+          <circle cx="12" cy="12" r="2" fill="currentColor" />
+          <circle cx="12" cy="12" r="6.5" stroke="currentColor" stroke-width="1.6" opacity="0.55" />
+          <circle cx="12" cy="12" r="10.5" stroke="currentColor" stroke-width="1.6" opacity="0.25" />
         </svg>
         <span class="brand-name">Ripple</span>
       </a>
-      <nav class="topbar-nav">
-        <a href="/aisaidok/">關於</a>
-        <a class="topbar-cta" href="#">訂閱</a>
-      </nav>
     </div>
   </header>
 
   <main>
-    <section class="home-hero">
-      <h1 class="home-title">AI 說這樣可以</h1>
-      <p class="home-tagline">
-        寫程式、踩坑、然後把坑寫下來。<br />
-        專門記錄那些「照著文件做卻不會動」的瞬間。
-      </p>
-    </section>
-
-    <section class="more-posts">
-      <h2 class="section-title">最新文章</h2>
+    <section class="more-posts home-posts">
+      <!-- 頁面唯一的 h1：移除大標題區塊後，這是首頁的主標題，
+           SEO 與螢幕閱讀器都需要有一個明確的 h1。 -->
+      <h1 class="section-title">最新文章</h1>
       <div class="post-list">
 
         <a class="post-card" href="/aisaidok/onagent-ai-customer-service/">
@@ -85,11 +73,7 @@
 
   <footer class="site-footer">
     <div class="site-footer-inner">
-      <span>© 2026 AI 說這樣可以</span>
-      <nav class="site-footer-nav">
-        <a href="/aisaidok/">關於</a>
-        <a href="/sitemap.xml">Sitemap</a>
-      </nav>
+      <span>© 2026 Ripple</span>
     </div>
   </footer>
 

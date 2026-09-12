@@ -31,8 +31,14 @@ html {
   -webkit-text-size-adjust: 100%;
 }
 
+/* 頁面內容不足一個視窗高時，頁尾仍固定在視窗底部而不是浮在中間 —
+   main 的 flex:1 吃掉剩餘空間，把 .site-footer 推到最下面。
+   內容夠長時，這組規則不影響正常的文件流。 */
 body {
   margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
   background: var(--bg);
   color: var(--text);
   font-family: var(--font-sans);
@@ -80,10 +86,10 @@ a {
 }
 
 /* 水紋圖標：同心圓弧由內而外遞減不透明度，呼應 ripple 的擴散感。
-   用 currentColor 上色，所以跟著 .brand 的文字色走。 */
+   用 currentColor 上色，所以跟著 .brand 的文字色走（黑白，與商標文字一致）。 */
 .brand-mark {
   flex: none;
-  color: var(--accent);
+  color: var(--text);
   transition: transform 200ms ease;
 }
 
@@ -129,6 +135,8 @@ a {
    ========================================================================== */
 
 main {
+  /* flex:1 讓 main 吃掉視窗剩餘高度，把頁尾推到底（見 body 的註解）。 */
+  flex: 1;
   max-width: var(--content-width);
   margin: 0 auto;
   padding: 0 24px;
@@ -138,40 +146,15 @@ main {
    首頁
    ========================================================================== */
 
-.home-hero {
-  padding: 72px 0 56px;
-  border-bottom: 1px solid var(--border);
-  margin-bottom: 48px;
-}
-
-.home-title {
-  margin: 0 0 16px;
-  font-family: var(--font-serif);
-  font-size: 48px;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-  font-weight: 700;
-}
-
-.home-tagline {
-  margin: 0;
-  font-size: 19px;
-  line-height: 1.6;
-  color: var(--text-secondary);
+/* 首頁沒有標題區塊，文章列表直接接在導覽列下方 —
+   這裡補上原本由 hero 提供的上方留白。 */
+.home-posts {
+  padding-top: 56px;
 }
 
 @media (max-width: 768px) {
-  .home-hero {
-    padding: 48px 0 36px;
-    margin-bottom: 36px;
-  }
-
-  .home-title {
-    font-size: 34px;
-  }
-
-  .home-tagline {
-    font-size: 17px;
+  .home-posts {
+    padding-top: 32px;
   }
 }
 
